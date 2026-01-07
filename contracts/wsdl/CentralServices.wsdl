@@ -1,0 +1,129 @@
+<wsdl:definitions xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:plink="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:wsdlsoap11="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdlsoap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap11enc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap11env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soap12env="http://www.w3.org/2003/05/soap-envelope" xmlns:soap12enc="http://www.w3.org/2003/05/soap-encoding" xmlns:wsa="http://schemas.xmlsoap.org/ws/2003/03/addressing" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://hospital-supply-chain.example.com/soap" xmlns:s0="http://hospital-supply-chain.example.com/soap/order" xmlns:s1="http://hospital-supply-chain.example.com/soap/stock" targetNamespace="http://hospital-supply-chain.example.com/soap" name="CentralServices">
+<wsdl:types>
+<xs:schema targetNamespace="http://hospital-supply-chain.example.com/soap" elementFormDefault="qualified">
+<xs:import namespace="http://hospital-supply-chain.example.com/soap/stock"/>
+<xs:import namespace="http://hospital-supply-chain.example.com/soap/order"/>
+<xs:complexType name="CreateOrder">
+<xs:sequence>
+<xs:element name="request" type="s0:OrderCreationRequest" minOccurs="0" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="CreateOrderResponse">
+<xs:sequence>
+<xs:element name="CreateOrderResult" type="s0:OrderCreationResult" minOccurs="0" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="StockUpdate">
+<xs:sequence>
+<xs:element name="request" type="s1:StockUpdateRequest" minOccurs="0" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="StockUpdateResponse">
+<xs:sequence>
+<xs:element name="StockUpdateResult" type="s1:StockUpdateResult" minOccurs="0" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="CreateOrder" type="tns:CreateOrder"/>
+<xs:element name="CreateOrderResponse" type="tns:CreateOrderResponse"/>
+<xs:element name="StockUpdate" type="tns:StockUpdate"/>
+<xs:element name="StockUpdateResponse" type="tns:StockUpdateResponse"/>
+</xs:schema>
+<xs:schema targetNamespace="http://hospital-supply-chain.example.com/soap/order" elementFormDefault="qualified">
+<xs:complexType name="OrderCreationRequest">
+<xs:sequence>
+<xs:element name="orderId" type="xs:string" minOccurs="0" nillable="true"/>
+<xs:element name="hospitalId" type="xs:string" nillable="true"/>
+<xs:element name="productCode" type="xs:string" nillable="true"/>
+<xs:element name="orderQuantity" type="xs:integer" nillable="true"/>
+<xs:element name="priority" type="xs:string" nillable="true"/>
+<xs:element name="estimatedDeliveryDate" type="xs:string" minOccurs="0" nillable="true"/>
+<xs:element name="timestamp" type="xs:string" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="OrderCreationResult">
+<xs:sequence>
+<xs:element name="success" type="xs:boolean" nillable="true"/>
+<xs:element name="message" type="xs:string" nillable="true"/>
+<xs:element name="orderId" type="xs:string" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="OrderCreationRequest" type="s0:OrderCreationRequest"/>
+<xs:element name="OrderCreationResult" type="s0:OrderCreationResult"/>
+</xs:schema>
+<xs:schema targetNamespace="http://hospital-supply-chain.example.com/soap/stock" elementFormDefault="qualified">
+<xs:complexType name="StockUpdateRequest">
+<xs:sequence>
+<xs:element name="hospitalId" type="xs:string" nillable="true"/>
+<xs:element name="productCode" type="xs:string" nillable="true"/>
+<xs:element name="currentStockUnits" type="xs:integer" nillable="true"/>
+<xs:element name="dailyConsumptionUnits" type="xs:integer" nillable="true"/>
+<xs:element name="daysOfSupply" type="xs:decimal" nillable="true"/>
+<xs:element name="timestamp" type="xs:string" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="StockUpdateResult">
+<xs:sequence>
+<xs:element name="success" type="xs:boolean" nillable="true"/>
+<xs:element name="message" type="xs:string" nillable="true"/>
+<xs:element name="orderTriggered" type="xs:boolean" nillable="true"/>
+<xs:element name="orderId" type="xs:string" minOccurs="0" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="StockUpdateRequest" type="s1:StockUpdateRequest"/>
+<xs:element name="StockUpdateResult" type="s1:StockUpdateResult"/>
+</xs:schema>
+</wsdl:types>
+<wsdl:message name="StockUpdate">
+<wsdl:part name="StockUpdate" element="tns:StockUpdate"/>
+</wsdl:message>
+<wsdl:message name="StockUpdateResponse">
+<wsdl:part name="StockUpdateResponse" element="tns:StockUpdateResponse"/>
+</wsdl:message>
+<wsdl:message name="CreateOrder">
+<wsdl:part name="CreateOrder" element="tns:CreateOrder"/>
+</wsdl:message>
+<wsdl:message name="CreateOrderResponse">
+<wsdl:part name="CreateOrderResponse" element="tns:CreateOrderResponse"/>
+</wsdl:message>
+<wsdl:service name="StockUpdateServiceImpl">
+<wsdl:port name="CentralServices" binding="tns:CentralServices">
+<wsdlsoap11:address location="http://localhost:8000/CentralServices"/>
+</wsdl:port>
+</wsdl:service>
+<wsdl:service name="OrderCreationServiceImpl">
+<wsdl:port name="CentralServices" binding="tns:CentralServices">
+<wsdlsoap11:address location="http://localhost:8000/CentralServices"/>
+</wsdl:port>
+</wsdl:service>
+<wsdl:portType name="CentralServices">
+<wsdl:operation name="StockUpdate" parameterOrder="StockUpdate">
+<wsdl:input name="StockUpdate" message="tns:StockUpdate"/>
+<wsdl:output name="StockUpdateResponse" message="tns:StockUpdateResponse"/>
+</wsdl:operation>
+<wsdl:operation name="CreateOrder" parameterOrder="CreateOrder">
+<wsdl:input name="CreateOrder" message="tns:CreateOrder"/>
+<wsdl:output name="CreateOrderResponse" message="tns:CreateOrderResponse"/>
+</wsdl:operation>
+</wsdl:portType>
+<wsdl:binding name="CentralServices" type="tns:CentralServices">
+<wsdlsoap11:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+<wsdl:operation name="StockUpdate">
+<wsdlsoap11:operation soapAction="StockUpdate" style="document"/>
+<wsdl:input name="StockUpdate">
+<wsdlsoap11:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="StockUpdateResponse">
+<wsdlsoap11:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="CreateOrder">
+<wsdlsoap11:operation soapAction="CreateOrder" style="document"/>
+<wsdl:input name="CreateOrder">
+<wsdlsoap11:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="CreateOrderResponse">
+<wsdlsoap11:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+</wsdl:binding>
+</wsdl:definitions>

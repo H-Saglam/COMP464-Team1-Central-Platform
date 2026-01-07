@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+               xmlns:tns="http://hospital-supply-chain.example.com/soap/stock">
+    <soap:Body>
+        <tns:StockUpdate>
+            <tns:request>
+                <tns:hospitalId>TEST-HASTANE-01</tns:hospitalId>
+                <tns:productCode>SERUM-500ML</tns:productCode>
+                <tns:currentStockUnits>75</tns:currentStockUnits>
+                <tns:dailyConsumptionUnits>50</tns:dailyConsumptionUnits>
+                <tns:daysOfSupply>1.5</tns:daysOfSupply>
+                <tns:timestamp>2026-01-07T16:30:00</tns:timestamp>
+            </tns:request>
+        </tns:StockUpdate>
+    </soap:Body>
+</soap:Envelope>

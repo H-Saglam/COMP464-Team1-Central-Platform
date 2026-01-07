@@ -1,0 +1,16 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                  xmlns:web="http://hospital-supply-chain.example.com/soap"
+                  xmlns:ord="http://hospital-supply-chain.example.com/soap/order">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <web:CreateOrder>
+         <web:request>
+            <ord:hospitalId>TEST-HASTANE-01</ord:hospitalId>
+            <ord:productCode>MANUAL-URUN-100</ord:productCode>
+            <ord:orderQuantity>500</ord:orderQuantity>
+            <ord:priority>URGENT</ord:priority>
+            <ord:timestamp>2026-01-07T17:00:00</ord:timestamp>
+         </web:request>
+      </web:CreateOrder>
+   </soapenv:Body>
+</soapenv:Envelope>

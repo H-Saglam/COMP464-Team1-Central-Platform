@@ -1,0 +1,34 @@
+# --- Python Gereksizleri ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# --- Sanal Ortamlar (Virtual Envs) ---
+# Kütüphane dosyalarını yüklememek için çok önemli
+venv/
+env/
+.venv/
+.env
+
+# --- Azure Functions (GÜVENLİK - KESİNLİKLE GİZLENMELİ) ---
+# İçinde şifreler olan dosyalar buraya
+local.settings.json
+appsettings.json
+*.json.user
+
+# --- İşletim Sistemi Dosyaları ---
+.DS_Store
+Thumbs.db
+
+# --- Editör ve IDE Ayarları ---
+.vscode/
+.idea/
+*.swp
+
+# --- Log Dosyaları ---
+*.log
+
+# --- Docker ---
+# Genellikle gerekmez ama log tutuluyorsa
+docker_logs/

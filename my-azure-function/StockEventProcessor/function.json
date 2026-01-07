@@ -1,0 +1,21 @@
+{
+  "scriptFile": "__init__.py",
+  "bindings": [
+    {
+      "type": "eventHubTrigger",
+      "name": "events",
+      "direction": "in",
+      "eventHubName": "inventory-low-events",
+      "connection": "HospitalHubConnection",
+      "cardinality": "many",
+      "consumerGroup": "$Default"
+    },
+    {
+      "type": "eventHub",
+      "name": "outputEvents",
+      "direction": "out",
+      "eventHubName": "order-commands",
+      "connection": "HospitalHubConnection"
+    }
+  ]
+}

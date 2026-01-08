@@ -6,16 +6,16 @@
       "name": "events",
       "direction": "in",
       "eventHubName": "inventory-low-events",
-      "connection": "HospitalHubConnection",
+      "connection": "EventHubConnectionString",
       "cardinality": "many",
       "consumerGroup": "$Default"
     },
     {
       "type": "eventHub",
-      "name": "outputEvents",
-      "direction": "out",
+      "name": "outputEvent",
       "eventHubName": "order-commands",
-      "connection": "HospitalHubConnection"
+      "connection": "EventHubConnectionString",
+      "direction": "out"
     }
   ]
 }

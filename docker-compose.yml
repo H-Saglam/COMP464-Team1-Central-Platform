@@ -1,49 +1,28 @@
 version: '3.8'
 
 services:
-  # -----------------------------------
-  # PostgreSQL Veritabanı Servisi
-  # -----------------------------------
-  db:
-    image: postgres:13
-    container_name: hospital_db
-    environment:
-      POSTGRES_USER: app_user
-      POSTGRES_PASSWORD: secure_password
-      POSTGRES_DB: hospital_db
-    volumes:
-      # Verilerin kalıcı olması için (konteyner silinse bile veri gitmez)
-      - postgres_data:/var/lib/postgresql/data
-      # Başlangıçta tabloları oluşturmak için init.sql dosyasını yüklüyoruz
-      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
-    ports:
-      - "5432:5432"
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U app_user -d hospital_db"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
-  # -----------------------------------
-  # Python SOAP Servisi (Team 1)
-  # -----------------------------------
+  # 'db' servisini silebilirsin veya yorum satırı yapabilirsin, artık Azure kullanıyoruz.
+  
   soa-service:
     build: .
     container_name: team1_soa_service
     ports:
       - "8000:8000"
     environment:
-      # Kod içindeki os.environ.get ile okuduğumuz değerler
-      - DB_HOST=db
+      # --- AZURE AYARLARI ---
+      # Resimdeki "Endpoint" adresi
+      - DB_HOST=team1-postgres-db.postgres.database.azure.com
+      
       - DB_PORT=5432
-      - POSTGRES_DB=hospital_db
-      - POSTGRES_USER=app_user
-      - POSTGRES_PASSWORD=secure_password
+      
+      # Varsayılan veritabanı
+      - POSTGRES_DB=postgres
+      
+      # Resimdeki "Administrator login"
+      - POSTGRES_USER=admin1
+      
+      # Senin belirlediğin şifre
+      - POSTGRES_PASSWORD=Root1234!
+      
       - PORT=8000
-    depends_on:
-      db:
-        condition: service_healthy # DB tamamen hazır olmadan servisi başlatma
     restart: on-failure
-
-volumes:
-  postgres_data:
